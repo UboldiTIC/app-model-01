@@ -22,6 +22,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // LangChain4J (Integrar IA de OpenAI):
+    /*
+    // Versión más reciente: de pago con api key.
+    implementation 'dev.langchain4j:langchain4j-open-ai:1.8.0'
+    implementation 'dev.langchain4j:langchain4j:1.8.0'
+    */
+    //Beta 01 - de prueba,  gratis:
+    implementation 'dev.langchain4j:langchain4j-open-ai-spring-boot-starter:1.0.0-beta1'
+    implementation 'dev.langchain4j:langchain4j-spring-boot-starter:1.0.0-beta1'
 }
 
 tasks.named('test') {
