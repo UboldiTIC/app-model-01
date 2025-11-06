@@ -6,14 +6,24 @@ This repository provides a ready-to-use full-stack template with a React fronten
 
 ### Backend
 
-* Tecnologías: Java - Spring - Spring Boot - PostgreSQL
+#### Tecnologías: Java - Spring - Spring Boot - PostgreSQL
 
-* Arquitectura por capas orientada al dominio o Layered Domain-Driven Architecture
+#### Arquitectura por capas orientada al dominio o Layered Domain-Driven Architecture
 
+Packages: 
 
-(describir)
+1. Domain (Entidades, Interfaces y servicios)
+	
+	Contiene otros paquetes: 
+		* Service
 
+2. Web (Controladores)
+	
+	Contiene otros paquetes:
+		* Controller
 
-* IA con dependencia LangChain4J
+3. Persistence (Conexión con DB, APIs externas y correo)
+
+#### IA con dependencia LangChain4J
 
 * 

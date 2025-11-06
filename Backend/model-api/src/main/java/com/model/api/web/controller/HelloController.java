@@ -1,5 +1,6 @@
-package com.model.api;
+package com.model.api.web.controller;
 
+import com.model.api.domain.service.ModelAIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class HelloController {
         this.aiService = aiService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/hello")
     public String hello() {
         return this.aiService.generatedGreeting(platform);
     }

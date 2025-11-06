@@ -1,4 +1,4 @@
-package com.model.api;
+package com.model.api.domain.service;
 
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
