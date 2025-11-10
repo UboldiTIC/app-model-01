@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: model_api_db
+      POSTGRES_USER: andres
+      POSTGRES_PASSWORD: modelandres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:
+
