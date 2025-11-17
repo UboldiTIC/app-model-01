@@ -9,7 +9,8 @@ public record MovieDto(
         Integer duration,
         Genre genre,
         LocalDate releaseDate,
-        Double rating
+        Double rating,
+        Boolean available
 ) {
 
 }
