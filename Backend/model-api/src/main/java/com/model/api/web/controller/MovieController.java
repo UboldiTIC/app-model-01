@@ -2,10 +2,9 @@ package com.model.api.web.controller;
 
 import com.model.api.domain.dto.MovieDto;
 import com.model.api.domain.service.MovieService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,12 +18,26 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<MovieDto> getAll() {
-        return this.movieService.getAll();
+    public ResponseEntity<List<MovieDto>> getAll() {
+        return ResponseEntity.ok(this.movieService.getAll());
     }
 
+    //Aplicación de ResponseEntity para recuperar y devolver códigos Http:
     @GetMapping("/{id}")
-    public MovieDto getById(@PathVariable long id){
-        return this.movieService.getById(id);
+    public ResponseEntity<MovieDto> getById(@PathVariable long id){
+
+        //ResponseEntity - Todos los servicios lo deben implementar.
+        MovieDto movieDto = this.movieService.getById(id);
+
+        if (movieDto == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(movieDto);
+    }
+
+    // Post Method:
+    @PostMapping
+    public ResponseEntity<MovieDto> add(@RequestBody MovieDto movieDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.movieService.add(movieDto));
     }
 }
