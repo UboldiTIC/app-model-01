@@ -1,6 +1,7 @@
 package com.model.api.persistence;
 
 import com.model.api.domain.dto.MovieDto;
+import com.model.api.domain.dto.UpdateMovieDto;
 import com.model.api.domain.repository.MovieRepository;
 import com.model.api.persistence.crud.CrudMovieEntity;
 import com.model.api.persistence.entity.MovieEntity;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -22,7 +24,7 @@ public class MovieEntityRepository implements MovieRepository {
         this.movieMapper = movieMapper;
     }
 
-    // Métodos Get:
+    // Get Method:
     @Override
     public List<MovieDto> getAll() {
         return this.movieMapper.toDto(this.crudMovieEntity.findAll());
@@ -34,11 +36,32 @@ public class MovieEntityRepository implements MovieRepository {
         return this.movieMapper.toDto(movieEntity);
     }
 
-    // Métodos Post:
+    // Post Method:
     @Override
     public MovieDto save(MovieDto movieDto) {
         MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
         movieEntity.setEstado("D");
+
+        return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
+    }
+
+    // Put Method
+    @Override
+    public MovieDto update(long id, UpdateMovieDto updateMovieDto) {
+        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
+
+        if (movieEntity == null) return null;
+
+        // Conversiones directas:
+        /*
+        movieEntity.setTitulo(updateMovieDto.title());
+        movieEntity.setFechaEstreno(updateMovieDto.releaseDate());
+        movieEntity.setClasificacion(BigDecimal.valueOf(updateMovieDto.rating()));
+        movieEntity.setEstado(String.valueOf(updateMovieDto.available()));
+        */
+
+        // Traemos las conversiones de MovieMapper:
+        this.movieMapper.updateEntityFromDto(updateMovieDto, movieEntity);
 
         return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
     }
