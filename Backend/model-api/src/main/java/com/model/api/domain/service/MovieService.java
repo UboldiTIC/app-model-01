@@ -32,4 +32,9 @@ public class MovieService {
     public MovieDto update(long id, UpdateMovieDto updateMovieDto) {
         return this.movieRepository.update(id, updateMovieDto);
     }
+
+    // Delete Method:
+    public boolean deleteById(long id) {
+        return this.movieRepository.deleteById(id);
+    }
 }

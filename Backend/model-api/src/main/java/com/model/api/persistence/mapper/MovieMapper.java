@@ -35,4 +35,17 @@ public interface MovieMapper {
     @Mapping(source = "available", target = "estado", qualifiedByName = "booleanToString")
     void updateEntityFromDto(UpdateMovieDto updateMovieDto, @MappingTarget MovieEntity movieEntity);
 
+    // Delete Method:
+    /*
+        En una operación DELETE:
+
+         - No recibís datos complejos (solo un id)
+
+         - No actualizás una entidad
+
+         - No creás una entidad nueva
+
+        Por lo tanto no hay nada para mapear hacia la base de datos.
+     */
+
 }

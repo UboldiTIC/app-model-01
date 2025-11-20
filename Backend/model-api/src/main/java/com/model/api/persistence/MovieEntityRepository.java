@@ -6,13 +6,9 @@ import com.model.api.domain.repository.MovieRepository;
 import com.model.api.persistence.crud.CrudMovieEntity;
 import com.model.api.persistence.entity.MovieEntity;
 import com.model.api.persistence.mapper.MovieMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MovieEntityRepository implements MovieRepository {
@@ -64,5 +60,16 @@ public class MovieEntityRepository implements MovieRepository {
         this.movieMapper.updateEntityFromDto(updateMovieDto, movieEntity);
 
         return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
+    }
+
+    // Delete Method
+    public boolean deleteById(long id) {
+
+        Optional<MovieEntity> movie = crudMovieEntity.findById(id);
+
+        if (movie.isEmpty()) return false;
+
+        crudMovieEntity.deleteById(id);
+        return true;
     }
 }
