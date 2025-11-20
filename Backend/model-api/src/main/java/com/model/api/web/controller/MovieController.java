@@ -1,7 +1,9 @@
 package com.model.api.web.controller;
 
 import com.model.api.domain.dto.MovieDto;
+import com.model.api.domain.dto.SuggestRequestDto;
 import com.model.api.domain.dto.UpdateMovieDto;
+import com.model.api.domain.service.ModelAIService;
 import com.model.api.domain.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,11 @@ import java.util.List;
 @RequestMapping("/movies")
 public class MovieController {
     private final MovieService movieService;
+    private final ModelAIService modelAIService;
 
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, ModelAIService modelAIService) {
         this.movieService = movieService;
+        this.modelAIService = modelAIService;
     }
 
     @GetMapping
@@ -40,6 +44,14 @@ public class MovieController {
     @PostMapping
     public ResponseEntity<MovieDto> add(@RequestBody MovieDto movieDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.movieService.add(movieDto));
+    }
+
+    //Recomendación con IA:
+    @PostMapping("/suggest")
+    public ResponseEntity<String> generateMoviesSuggestion(@RequestBody SuggestRequestDto suggestRequestDto) {
+
+        return ResponseEntity.ok(this.modelAIService.generateMoviesSuggestion(suggestRequestDto.userPreferences()));
+
     }
 
     // Put (update) Method:
