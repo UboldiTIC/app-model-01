@@ -23,6 +23,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    // Validation (validar los datos que vienen del cliente)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     //Spring Data JPA - PostgreSQL en Docker:
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
