@@ -2,6 +2,7 @@ package com.model.api.persistence;
 
 import com.model.api.domain.dto.MovieDto;
 import com.model.api.domain.dto.UpdateMovieDto;
+import com.model.api.domain.exception.MovieAlreadyExistsException;
 import com.model.api.domain.repository.MovieRepository;
 import com.model.api.persistence.crud.CrudMovieEntity;
 import com.model.api.persistence.entity.MovieEntity;
@@ -35,6 +36,12 @@ public class MovieEntityRepository implements MovieRepository {
     // Post Method:
     @Override
     public MovieDto save(MovieDto movieDto) {
+
+        // Exception control - unique title:
+        if (this.crudMovieEntity.findFirstByTitulo(movieDto.title()) != null) {
+            throw new MovieAlreadyExistsException(movieDto.title());
+        }
+
         MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
         movieEntity.setEstado("D");
 
