@@ -3,6 +3,7 @@ package com.model.api.persistence;
 import com.model.api.domain.dto.MovieDto;
 import com.model.api.domain.dto.UpdateMovieDto;
 import com.model.api.domain.exception.MovieAlreadyExistsException;
+import com.model.api.domain.exception.MovieDoesNotExistsExeption;
 import com.model.api.domain.repository.MovieRepository;
 import com.model.api.persistence.crud.CrudMovieEntity;
 import com.model.api.persistence.entity.MovieEntity;
@@ -51,9 +52,8 @@ public class MovieEntityRepository implements MovieRepository {
     // Put Method
     @Override
     public MovieDto update(long id, UpdateMovieDto updateMovieDto) {
-        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
 
-        if (movieEntity == null) return null;
+        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElseThrow(() -> new MovieDoesNotExistsExeption(id));
 
         // Conversiones directas:
         /*
@@ -72,7 +72,7 @@ public class MovieEntityRepository implements MovieRepository {
     // Delete Method
     public boolean deleteById(long id) {
 
-        Optional<MovieEntity> movie = crudMovieEntity.findById(id);
+        Optional<MovieEntity> movie = Optional.ofNullable(crudMovieEntity.findById(id).orElseThrow(() -> new MovieDoesNotExistsExeption(id)));
 
         if (movie.isEmpty()) return false;
 
