@@ -43,13 +43,13 @@ public class MovieController {
 
     // Post (Create) Method:
     @PostMapping
-    public ResponseEntity<MovieDto> add(@RequestBody MovieDto movieDto) {
+    public ResponseEntity<MovieDto> add(@RequestBody @Valid MovieDto movieDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.movieService.add(movieDto));
     }
 
     //Recomendación con IA:
     @PostMapping("/suggest")
-    public ResponseEntity<String> generateMoviesSuggestion(@RequestBody SuggestRequestDto suggestRequestDto) {
+    public ResponseEntity<String> generateMoviesSuggestion(@RequestBody @Valid SuggestRequestDto suggestRequestDto) {
 
         return ResponseEntity.ok(this.modelAIService.generateMoviesSuggestion(suggestRequestDto.userPreferences()));
 
