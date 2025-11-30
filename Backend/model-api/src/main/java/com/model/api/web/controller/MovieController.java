@@ -5,6 +5,11 @@ import com.model.api.domain.dto.SuggestRequestDto;
 import com.model.api.domain.dto.UpdateMovieDto;
 import com.model.api.domain.service.ModelAIService;
 import com.model.api.domain.service.MovieService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
+@Tag(name = "Movies", description = " Operations about movies") // Swagger title.
 public class MovieController {
     private final MovieService movieService;
     private final ModelAIService modelAIService;
@@ -30,7 +36,15 @@ public class MovieController {
 
     //Aplicación de ResponseEntity para recuperar y devolver códigos Http:
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDto> getById(@PathVariable long id){
+    @Operation(
+            summary = "Get a movie by id",
+            description = "Returns the movie that matches the provided identifier.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Movie found."),
+                    @ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content)
+            }
+    ) // Swagger
+    public ResponseEntity<MovieDto> getById(@Parameter(description = "Identifier of the movie to retrieve", example = "9") @PathVariable long id){
 
         //ResponseEntity - Todos los servicios lo deben implementar.
         MovieDto movieDto = this.movieService.getById(id);
