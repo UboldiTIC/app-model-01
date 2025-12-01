@@ -8,10 +8,13 @@ import com.model.api.domain.service.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +47,7 @@ public class MovieController {
                     @ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content)
             }
     ) // Swagger
-    public ResponseEntity<MovieDto> getById(@Parameter(description = "Identifier of the movie to retrieve", example = "9") @PathVariable long id){
+    public ResponseEntity<MovieDto> getById(@Parameter(description = "Identifier of the movie to retrieve.", example = "9") @PathVariable long id){
 
         //ResponseEntity - Todos los servicios lo deben implementar.
         MovieDto movieDto = this.movieService.getById(id);
@@ -57,6 +60,34 @@ public class MovieController {
 
     // Post (Create) Method:
     @PostMapping
+    @Operation(
+            summary = "Creates a new movie.",
+            description = "Creates a new movie using the data provided in the request body."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                responseCode = "201",
+                description = "Product created successfully.",
+                content = @Content(
+                        mediaType = MediaType.APPLICATION_JSON_VALUE,
+                        schema = @Schema(implementation = MovieDto.class)
+                )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request. Body validation failed.",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(example = "{\"status\": 400, \"error\": \"The name is required.\"}")
+                    )
+
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "Conflict. A product with the same name already exists.",
+                    content = @Content
+            )
+    })
     public ResponseEntity<MovieDto> add(@RequestBody @Valid MovieDto movieDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.movieService.add(movieDto));
     }

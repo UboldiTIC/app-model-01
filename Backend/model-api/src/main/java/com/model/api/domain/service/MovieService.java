@@ -4,6 +4,7 @@ import com.model.api.domain.dto.MovieDto;
 import com.model.api.domain.dto.UpdateMovieDto;
 import com.model.api.domain.repository.MovieRepository;
 import dev.langchain4j.agent.tool.Tool;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class MovieService {
     }
 
     // Post Method:
-    public MovieDto add(MovieDto movieDto) {
+    public MovieDto add(@Valid MovieDto movieDto) {
         return this.movieRepository.save(movieDto);
     }
 

@@ -1,6 +1,7 @@
 package com.model.api.domain.dto;
 
 import com.model.api.domain.Genre;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +10,11 @@ import jakarta.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 public record MovieDto(
+
+        @Schema(
+                description = "Unique movie identifier. Generated automatically.",
+                accessMode = Schema.AccessMode.READ_ONLY
+        )
         Long id,
 
         @NotBlank(message = "El título de la película no puede estar vacío.")

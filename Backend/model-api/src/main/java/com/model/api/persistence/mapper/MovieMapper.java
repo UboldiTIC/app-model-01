@@ -29,7 +29,11 @@ public interface MovieMapper {
 
 
     // Put Method:
+    @InheritInverseConfiguration
+    //@Mapping(source = "id", target = "id")
     //@Mapping(source = "title", target = "titulo")
+    //@Mapping(source = "duration", target = "duracion")
+    //@Mapping(source = "genre", target = "genero")
     @Mapping(source = "releaseDate", target = "fechaEstreno")
     @Mapping(source = "rating", target = "clasificacion")
     @Mapping(source = "available", target = "estado", qualifiedByName = "booleanToString")

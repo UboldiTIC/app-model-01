@@ -8,6 +8,7 @@ import com.model.api.domain.repository.MovieRepository;
 import com.model.api.persistence.crud.CrudMovieEntity;
 import com.model.api.persistence.entity.MovieEntity;
 import com.model.api.persistence.mapper.MovieMapper;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class MovieEntityRepository implements MovieRepository {
 
     // Post Method:
     @Override
-    public MovieDto save(MovieDto movieDto) {
+    public MovieDto save(@Valid MovieDto movieDto) {
 
         // Exception control - unique title:
         if (this.crudMovieEntity.findFirstByTitulo(movieDto.title()) != null) {
