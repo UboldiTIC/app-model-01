@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
-@Tag(name = "Movies", description = " Operations about movies") // Swagger title.
+@Tag(name = "Movies", description = " Operations about movies.") // Swagger title.
 public class MovieController {
     private final MovieService movieService;
     private final ModelAIService modelAIService;
@@ -32,7 +32,12 @@ public class MovieController {
         this.modelAIService = modelAIService;
     }
 
+    // Get Method:
     @GetMapping
+    @Operation(
+            summary = "Get all movies.",
+            description = "Get all the movies that exist in the database."
+    )
     public ResponseEntity<List<MovieDto>> getAll() {
         return ResponseEntity.ok(this.movieService.getAll());
     }
@@ -40,7 +45,7 @@ public class MovieController {
     //Aplicación de ResponseEntity para recuperar y devolver códigos Http:
     @GetMapping("/{id}")
     @Operation(
-            summary = "Get a movie by id",
+            summary = "Get a movie by id.",
             description = "Returns the movie that matches the provided identifier.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Movie found."),
@@ -92,8 +97,24 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.movieService.add(movieDto));
     }
 
-    //Recomendación con IA:
+    // Recomendación con IA:
     @PostMapping("/suggest")
+    @Operation(
+            summary = "Generate suggested movies.",
+            description = "Generate a list of suggested movies based on the customer's preferences and include a short description for each one."
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Ok. Here is your list of suggested movies."
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Not Found. No movies have been suggested."
+                    )
+            }
+    )
     public ResponseEntity<String> generateMoviesSuggestion(@RequestBody @Valid SuggestRequestDto suggestRequestDto) {
 
         return ResponseEntity.ok(this.modelAIService.generateMoviesSuggestion(suggestRequestDto.userPreferences()));
@@ -108,7 +129,11 @@ public class MovieController {
 
     // Delete Method:
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable long id) {
+    @Operation(
+            summary = "Delete movie by id.",
+            description = "Sending the ID deletes the movie from the database."
+    )
+    public ResponseEntity<Void> deleteById(@Parameter(description = "Identifier of the movie to delete.", example = "9") @PathVariable long id) {
         boolean deleted = movieService.deleteById(id);
 
         if (!deleted) {
