@@ -23,6 +23,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	//Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
     // Validation (validar los datos que vienen del cliente)
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
