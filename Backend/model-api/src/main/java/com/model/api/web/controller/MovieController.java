@@ -107,11 +107,11 @@ public class MovieController {
             value = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Ok. Here is your list of suggested movies."
+                            description = "Here is your list of suggested movies."
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Not Found. No movies have been suggested."
+                            description = "No movies have been suggested."
                     )
             }
     )
@@ -123,7 +123,23 @@ public class MovieController {
 
     // Put (update) Method:
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDto> update(@PathVariable long id, @RequestBody @Valid UpdateMovieDto updateMovieDto) {
+    @Operation(
+            summary = "Update an existing movie in the database.",
+            description = "By sending the ID, we can edit certain movie fields such as release date, availability, and rating."
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "The movie was successfully updated."
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "The movie was not updated; please try again."
+                    )
+            }
+    )
+    public ResponseEntity<MovieDto> update(@Parameter(description = "Identifier of the movie to update.", example = "9") @PathVariable long id, @RequestBody @Valid UpdateMovieDto updateMovieDto) {
         return ResponseEntity.ok(this.movieService.update(id, updateMovieDto));
     }
 
