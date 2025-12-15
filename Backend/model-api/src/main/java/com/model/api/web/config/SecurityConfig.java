@@ -13,7 +13,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults()) // Luego permitir origen cruzado en clase: CorsConfig
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().authenticated()
 
