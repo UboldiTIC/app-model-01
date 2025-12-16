@@ -38,24 +38,3 @@ INSERT INTO modelo_api_peliculas (titulo, duracion, genero, clasificacion, fecha
 VALUES ('Avengers: Endgame', 181, 'ACCION', 3.9, '2019-04-26', 'D')
     ON CONFLICT (titulo) DO NOTHING;
 
-INSERT INTO users (
-    username,
-    disabled,
-    email,
-    locked,
-    password
-) VALUES
-      (
-          'admin',
-          false,
-          'admin@gmail.com',
-          false,
-          '$2y$10$2YpOlC4r.uTUyk9JfaxLBeKHBt1ptq4r1/n4i8fxmfbf9JUv9UDMm'
-      ),
-      (
-          'customer',
-          false,
-          'customer@gmail.com',
-          false,
-          '$2y$10$0vKw7Hescvkpbj6i/wdEH.D5BqW/fQ0AwpO4MQPGHdFNkDMv9OwGG'
-      );
