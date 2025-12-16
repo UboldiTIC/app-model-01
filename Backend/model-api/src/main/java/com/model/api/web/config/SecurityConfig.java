@@ -30,6 +30,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
                         // Reglas para habilitar endpoint para usuarios específicos:
                         //.requestMatchers("/model/api/**").hasRole("ADMIN")
+                        //.requestMatchers("/model/api/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
