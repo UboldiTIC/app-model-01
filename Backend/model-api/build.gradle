@@ -55,6 +55,10 @@ dependencies {
     //Deploy
     //https://render.com/
 
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
 }
 
 tasks.named('test') {
