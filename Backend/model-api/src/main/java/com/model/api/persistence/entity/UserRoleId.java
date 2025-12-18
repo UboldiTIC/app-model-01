@@ -22,10 +22,6 @@ public class UserRoleId implements Serializable {
         if (this == o) return true;
         if (!(o instanceof UserRoleId that)) return false;
 
-        /*
-        if (o == null || getClass() != o.getClass()) return false;
-        UserRoleId that = (UserRoleId) o;
-         */
         return Objects.equals(username, that.username) && Objects.equals(role, that.role);
     }
 
