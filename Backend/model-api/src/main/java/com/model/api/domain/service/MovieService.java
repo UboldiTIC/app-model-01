@@ -5,6 +5,7 @@ import com.model.api.domain.dto.UpdateMovieDto;
 import com.model.api.domain.repository.MovieRepository;
 import dev.langchain4j.agent.tool.Tool;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class MovieService {
     }
 
     // Post Method:
+    @Secured("ROLE_ADMIN")
     public MovieDto add(@Valid MovieDto movieDto) {
         return this.movieRepository.save(movieDto);
     }
