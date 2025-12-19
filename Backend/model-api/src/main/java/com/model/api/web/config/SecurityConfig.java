@@ -3,7 +3,9 @@ package com.model.api.web.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,6 +28,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults()) // Luego permitir origen cruzado en clase: CorsConfig
                 .authorizeHttpRequests(auth -> auth
+                        // Login Público:
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+
+                        // API Protegida:
                         // Reglas para permitir o negar métodos y usuarios (las reglas generales van abajo:):
                         // Reglas para habilitar endpoint para usuarios específicos:
                         //.requestMatchers("/model/api/**").hasRole("ADMIN")
@@ -62,6 +68,12 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(admin, customer);
     }
     */
+
+    // JWT
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
 
     //Password Encoder:
     @Bean
