@@ -1,19 +1,24 @@
 package com.model.api.persistence.entity;
 
+import com.model.api.persistence.audit.AuditUsername;
+import com.model.api.persistence.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@EntityListeners({AuditingEntityListener.class, AuditUsername.class})
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserEntity {
+public class UserEntity extends AuditableEntity implements Serializable {
     @Id // Tiene que ser el de Jakarta.
     @Column(nullable = false, length = 20)
     private String username;
